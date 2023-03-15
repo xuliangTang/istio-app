@@ -1,19 +1,12 @@
 package main
 
 import (
-	"context"
+	"github.com/xuliangTang/athena/athena"
 	v1 "istio-app/internal/userApp/v1"
-	"log"
 )
 
 func main() {
-	svc := &v1.UserService{}
-	loginRet, _ := svc.UserLogin(context.Background(), &v1.KindLoginRequest{
-		Spec: &v1.UserLoginModel{
-			UserName: "txl",
-			UserPwd:  "123456",
-		},
-	})
-
-	log.Println(loginRet)
+	athena.Ignite().Configuration(v1.NewConfiguration()).
+		Mount("", nil, v1.NewUserCtl()).
+		Launch()
 }

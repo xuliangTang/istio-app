@@ -8,6 +8,10 @@ type UserService struct {
 	UnimplementedUserServiceServer
 }
 
+func NewUserService() *UserService {
+	return &UserService{}
+}
+
 func (this *UserService) UserLogin(ctx context.Context, req *KindLoginRequest) (*KindLoginResponse, error) {
 	return &KindLoginResponse{
 		Code:    200,
