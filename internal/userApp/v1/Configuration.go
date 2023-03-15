@@ -9,3 +9,7 @@ func NewConfiguration() *Configuration {
 func (*Configuration) InitUserService() *UserService {
 	return NewUserService()
 }
+
+func (*Configuration) InitRepo() *UserRepo {
+	return NewUserRepo()
+}
