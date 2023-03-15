@@ -1,0 +1,7 @@
+syntax = "proto3";
+option go_package = "internal/userApp/v1";
+import "userkind.proto";
+
+service UserService {
+    rpc UserLogin(KindLoginRequest) returns(KindLoginResponse);
+}
