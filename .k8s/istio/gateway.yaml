@@ -1,0 +1,16 @@
+apiVersion: networking.istio.io/v1beta1
+kind: Gateway
+metadata:
+  name: nginx-gw
+  namespace: myistio
+spec:
+  selector:
+    app: istio-ingressgateway
+  servers:
+    - hosts:
+        - istio.virtuallain.com
+      port:
+        name: http
+        number: 80
+        protocol: HTTP
+        targetPort: 80
