@@ -1,0 +1,27 @@
+apiVersion: networking.istio.io/v1beta1
+kind: VirtualService
+metadata:
+  name: userapp
+  namespace: myistio
+spec:
+  gateways:
+    - nginx-gw
+  hosts:
+    - istio.virtuallain.com
+  http:
+    - match:
+        - uri:
+            prefix: /
+          headers:
+            apiversion:
+              exact: user.virtuallain.com/v1
+            kind:
+              exact: login
+      rewrite:
+        uri: /login
+      route:
+        - destination:
+            host: userapp-svc
+            port:
+              number: 80
+          weight: 100
