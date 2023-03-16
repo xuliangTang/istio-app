@@ -1,0 +1,18 @@
+name: Production
+
+on:
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: ls
+        run: ls -l
+      - name: Apply
+        uses: starubiquitous/kubectl@master
+        env:
+          KUBE_CONFIG: ${{ secrets.K8S_CONFIG }}
+        with:
+          args: --insecure-skip-tls-verify apply -f .k8s/prod

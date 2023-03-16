@@ -1,0 +1,46 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: userapp
+  namespace: myistio
+spec:
+  selector:
+    matchLabels:
+      app: userapp
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: userapp
+        version: v1.0.0
+    spec:
+      imagePullSecrets:
+        - name: aliyun
+      containers:
+        - name: userapp
+          image: registry.cn-hangzhou.aliyuncs.com/virtuallain/istio-app:latest
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8080
+          volumeMounts:
+            - name: istio-app
+              mountPath: /app/application.yml
+              subPath: userapp
+      volumes:
+        - name: istio-app
+          configMap:
+            defaultMode: 0655
+            name: istio-app
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: userapp-svc
+  namespace: myistio
+spec:
+  type: ClusterIP
+  ports:
+    - port: 80
+      targetPort: 8080
+  selector:
+    app: userapp
