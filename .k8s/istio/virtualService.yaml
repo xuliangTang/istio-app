@@ -25,3 +25,19 @@ spec:
             port:
               number: 80
           weight: 100
+    - match:
+        - uri:
+            prefix: /
+          headers:
+            apiversion:
+              exact: user.virtuallain.com/v1
+            kind:
+              prefix: register
+      rewrite:
+        uri: /register
+      route:
+        - destination:
+            host: userapp-svc
+            port:
+              number: 80
+          weight: 100
