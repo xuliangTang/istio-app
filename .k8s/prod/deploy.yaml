@@ -12,7 +12,7 @@ spec:
     metadata:
       labels:
         app: userapp
-        version: v1.0.0
+        version: v1.0.1
     spec:
       imagePullSecrets:
         - name: aliyun
