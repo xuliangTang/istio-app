@@ -24,6 +24,17 @@ func (this *UserCtl) login(ctx *gin.Context) any {
 	return rsp.Data
 }
 
+func (this *UserCtl) register(ctx *gin.Context) any {
+	kindRegisterReq := &KindRegisterRequest{}
+	athena.Error(ctx.BindJSON(kindRegisterReq))
+
+	rsp, err := this.UserSvc.UserRegister(ctx, kindRegisterReq)
+	athena.Error(err)
+
+	return rsp.Data
+}
+
 func (this *UserCtl) Build(athena *athena.Athena) {
 	athena.Handle("POST", "/login", this.login)
+	athena.Handle("POST", "register", this.register)
 }

@@ -4,4 +4,5 @@ import "userkind.proto";
 
 service UserService {
     rpc UserLogin(KindLoginRequest) returns(KindLoginResponse);
+    rpc UserRegister(KindRegisterRequest) returns(KindRegisterResponse);
 }

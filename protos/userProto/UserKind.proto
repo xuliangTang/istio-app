@@ -12,4 +12,12 @@ message KindLoginResponse {
     UserModel data=3;
 }
 
+message KindRegisterRequest {
+    UserRegisterModel spec=1;
+}
 
+message KindRegisterResponse {
+    int32 code=1;
+    string message=2;
+    UserModel data=3;
+}

@@ -1,6 +1,9 @@
 package v1
 
-import "fmt"
+import (
+	"fmt"
+	"math/rand"
+)
 
 type IUserRepo interface {
 	FindByID(model *UserModel) error
@@ -24,9 +27,17 @@ func (this *UserRepo) FindByID(model *UserModel) error {
 	}
 	return nil
 }
+
 func (this *UserRepo) Update(model *UserModel) error {
 	return nil
 }
+
 func (this *UserRepo) New(model *UserModel) error {
+	model.UserId = int32(rand.Intn(100))
+
+	if model.UserName == "txl" {
+		return fmt.Errorf("用户名已经存在")
+	}
+
 	return nil
 }
