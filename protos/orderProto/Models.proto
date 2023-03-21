@@ -1,0 +1,15 @@
+syntax = "proto3";
+option go_package = "internal/orderApp/v1";
+
+message ProdModel {
+  // @gotags: mapstructure:"id"
+  int32 id=1;   // 商品ID
+  // @gotags: mapstructure:"prod_name"
+  string prod_name=2;   // 商品名
+  // @gotags: mapstructure:"prod_price"
+  float prod_price=3; // 价格
+}
+
+
+
+
