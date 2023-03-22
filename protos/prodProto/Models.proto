@@ -1,5 +1,5 @@
 syntax = "proto3";
-option go_package = "internal/orderApp/v1";
+option go_package = "internal/prodApp/v1";
 
 message ProdModel {
   // @gotags: mapstructure:"id"
