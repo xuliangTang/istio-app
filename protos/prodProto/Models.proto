@@ -8,6 +8,8 @@ message ProdModel {
   string prod_name=2;   // 商品名
   // @gotags: mapstructure:"prod_price"
   float prod_price=3; // 价格
+  // @gotags: mapstructure:"on_sale"
+  bool on_sale=4; // 是否上架
 }
 
 
