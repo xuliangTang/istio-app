@@ -12,6 +12,14 @@ message ProdModel {
   bool on_sale=4; // 是否上架
 }
 
-
+// 商品库存模型
+message ProdStockModel {
+  // @gotags: mapstructure:"order_no"
+  string prod_id=1;   // 商品ID
+  // @gotags: mapstructure:"stock"
+  int32 stock=2; // 库存
+  // @gotags: mapstructure:"version"
+  float version=3; // 版本
+}
 
 

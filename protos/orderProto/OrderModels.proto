@@ -1,0 +1,26 @@
+syntax = "proto3";
+option go_package = "internal/orderApp/v1";
+
+// 执行增删改 返回的结果集
+message ExecResult {
+    // @gotags: mapstructure:"rows_affected"
+    int32 rows_affected=1; //受影响的行
+}
+
+//创建订单时的请求模型
+message OrderCreateRequest {
+    // @gotags: mapstructure:"order_no"
+    string order_no=1;   //订单编号
+    // @gotags: mapstructure:"prod_id"
+    int32 prod_id=3; //商品ID
+    // @gotags: mapstructure:"prod_num"
+    int32 prod_num=4; //商品数量
+    // @gotags: mapstructure:"prod_price"
+    float prod_price=5; //商品价格
+    // @gotags: mapstructure:"user_name"
+    string user_name=6; //下单人用户名
+}
+
+
+
+
