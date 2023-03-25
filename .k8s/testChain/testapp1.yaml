@@ -1,0 +1,161 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: checkvalidate
+  namespace: myistio
+spec:
+  selector:
+    matchLabels:
+      app: checkvalidate
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: checkvalidate
+    spec:
+      nodeName: lain1
+      containers:
+        - name: checkvalidate
+          image: alpine:3.12
+          imagePullPolicy: IfNotPresent
+          workingDir: "/app"
+          env:
+            - name: MidSvc
+              value: "dataflow"
+          command: ["./checkvalidate"]
+          volumeMounts:
+            - name: app
+              mountPath: /app
+          ports:
+            - containerPort: 80
+      volumes:
+        - name: app
+          hostPath:
+             path: /home/txl/testChain
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: checkvalidate
+  namespace: myistio
+spec:
+  type: ClusterIP
+  ports:
+    - port: 80
+      protocol: TCP
+      targetPort: 80
+      name: httpport
+  selector:
+    app: checkvalidate
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: checkstock
+  namespace: myistio
+spec:
+  selector:
+    matchLabels:
+      app: checkstock
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: checkstock
+    spec:
+      nodeName: lain1
+      containers:
+        - name: checkstock
+          image: alpine:3.12
+          imagePullPolicy: IfNotPresent
+          workingDir: "/app"
+          command: ["./checkstock"]
+          env:
+            - name: MidSvc
+              value: "dataflow"
+          volumeMounts:
+            - name: app
+              mountPath: /app
+          ports:
+            - containerPort: 80
+      volumes:
+        - name: app
+          hostPath:
+            path: /home/txl/testChain
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: checkstock
+  namespace: myistio
+spec:
+  type: ClusterIP
+  ports:
+    - port: 80
+      protocol: TCP
+      targetPort: 80
+      name: httpport
+  selector:
+    app: checkstock
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: commonok
+  namespace: myistio
+spec:
+  selector:
+    matchLabels:
+      app: commonok
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: commonok
+    spec:
+      nodeName: lain1
+      containers:
+        - name: commonok
+          image: alpine:3.12
+          imagePullPolicy: IfNotPresent
+          workingDir: "/app"
+          command: ["./commonok"]
+          env:
+            - name: MidSvc
+              value: "dataflow"
+          volumeMounts:
+            - name: app
+              mountPath: /app
+          ports:
+            - containerPort: 80
+      volumes:
+        - name: app
+          hostPath:
+             path: /home/txl/testChain
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: commonok
+  namespace: myistio
+spec:
+  type: ClusterIP
+  ports:
+    - port: 80
+      protocol: TCP
+      targetPort: 80
+      name: httpport
+  selector:
+    app: commonok
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: dataflow
+  namespace: myistio
+spec:
+  type: ClusterIP
+  ports:
+    - port: 80
+      protocol: TCP
+      name: httpport

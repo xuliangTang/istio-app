@@ -1,0 +1,60 @@
+apiVersion: networking.istio.io/v1beta1
+kind: Gateway
+metadata:
+ name: nginx-gw
+ namespace: myistio
+spec:
+ selector:
+   app: istio-ingressgateway
+ servers:
+ - port:
+     number: 80
+     name: http
+     protocol: HTTP
+   hosts:
+   - istio.virtuallain.com
+---
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: testchain-vs
+  namespace: myistio
+spec:
+  hosts:
+  - dataflow
+  - istio.virtuallain.com
+  gateways:
+  - nginx-gw
+  - mesh
+  http:
+  - match:
+    - port: 80
+      method:
+        exact: GET
+    route:
+    - destination:
+        host: checkvalidate
+        port:
+          number: 80
+  - match:
+    - gateways:
+      - mesh
+      headers:
+        step:
+          exact: prodok
+    route:
+    - destination:
+        host: checkstock
+        port:
+          number: 80
+  - match:
+    - gateways:
+        - mesh
+      headers:
+        step:
+          exact: stockok
+    route:
+      - destination:
+          host: commonok
+          port:
+            number: 80
