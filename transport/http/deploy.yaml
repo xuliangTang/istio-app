@@ -1,0 +1,43 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: podproxy
+spec:
+  selector:
+    matchLabels:
+      app: podproxy
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: podproxy
+    spec:
+      nodeName: lain1
+      containers:
+        - name: podproxy
+          image: alpine:3.12
+          imagePullPolicy: IfNotPresent
+          workingDir: /app
+          command: ["./podproxy"]
+          volumeMounts:
+            - name: app
+              mountPath: /app
+          ports:
+            - containerPort: 8080
+      volumes:
+        - name: app
+          hostPath:
+             path: /home/txl/podProxy
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: podproxy-svc
+spec:
+  type: NodePort
+  ports:
+    - port: 80
+      targetPort: 8080
+      nodePort: 31190
+  selector:
+    app: podproxy
